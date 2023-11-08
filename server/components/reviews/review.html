@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews</title>
+  </head>
+  <body style="text-align: center">
+    <div>
+      <h1>Your votes</h1>
+    </div>
+    <div class="display" style="padding: 1rem"></div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"
+      integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- <script type="module" src="review.js"></script> -->
+    <script>
+      const display = document.querySelector(".display");
+
+      const fetchChoices = async () => {
+        try {
+          const { data } = await axios.get("/api/sendBackUserChoices");
+          console.log(`data : ${data}`);
+
+          // const candidate = data.data.map((dawng) => {
+          //   let each = `<div>${dawng.name} - ${dawng.franchise}</div>`;
+          //   display.appendChild(each);
+          //   console.log(each);
+          // });
+          const candidate = data.data.map((dawng) => {
+            return `<div style="margin-top:1rem"><span style="font-weight: bold; font-size: 1rem;">${dawng.name}</span> - ${dawng.franchise}`;
+          });
+          display.innerHTML = candidate.join("");
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      fetchChoices();
+    </script>
+  </body>
+</html>
